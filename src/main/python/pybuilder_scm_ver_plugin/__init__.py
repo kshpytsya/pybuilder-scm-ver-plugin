@@ -5,3 +5,4 @@ import setuptools_scm
 @init
 def initialize_my_plugin(project):
     project.version = setuptools_scm.get_version()
+    project.set_property("version", project.version)
