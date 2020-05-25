@@ -8,7 +8,7 @@ name = "pybuilder-scm-ver-plugin"
 authors = [Author("Kyrylo Shpytsya", "kshpitsa@gmail.com")]
 license = "MIT"
 summary = "pybuilder plugin to set project from SCM"
-version = "0.1.0"
+version = "0.1.1"
 url = "https://github.com/kshpytsya/pybuilder-scm-ver-plugin"
 default_task = "publish"
 
