@@ -15,7 +15,7 @@ default_task = "publish"
 
 @init
 def set_properties(project):
-    project.depends_on("setuptools_scm")
+    project.depends_on("setuptools_scm<9.0")
     project.set_property("distutils_classifiers", [
         'Development Status :: 4 - Beta',
         'Programming Language :: Python',
