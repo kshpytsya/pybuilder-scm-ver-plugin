@@ -9,11 +9,21 @@ def initialize_my_plugin(project, logger):
 
 @task
 def prepare(project, logger):
-    root = project.get_property("scm_ver_root", ".")
-    relative_to = project.get_property("scm_ver_relative_to", None)
-    version_scheme = project.get_property("scm_ver_version_scheme", setuptools_scm.DEFAULT_VERSION_SCHEME)
-    local_scheme = project.get_property("scm_ver_local_scheme", setuptools_scm.DEFAULT_LOCAL_SCHEME)
-    logger.debug(f"pybuilder_scm_ver: root: {root}, relative to {relative_to}, local scheme: {local_scheme}, version scheme: {version_scheme}")
-    project.version = setuptools_scm.get_version(root=root, relative_to=relative_to, version_scheme=version_scheme, local_scheme=local_scheme)
+    # call setuptools_scm.get_version() only with available properties
+    scm_kwargs = {}
+    for key, prop in (
+        ("root", "scm_ver_root"),
+        ("relative_to", "scm_ver_relative_to"),
+        ("version_scheme", "scm_ver_version_scheme"),
+        ("local_scheme", "scm_ver_local_scheme"),
+    ):
+        if project.has_property(prop):
+            scm_kwargs[key] = project.get_property(prop)
+    if scm_kwargs:
+        logger.debug("pybuilder_scm_ver: getting version with arguments" +
+                     ",".join(f"{key}: {prop}" for key, prop in scm_kwargs.items()))
+    else:
+        logger.debug("pybuilder_scm_ver: getting version with default arguments")
+    project.version = setuptools_scm.get_version(**scm_kwargs)
     project.set_property("version", project.version)
     logger.info(f"Version extracted from SCM: {project.version}")
