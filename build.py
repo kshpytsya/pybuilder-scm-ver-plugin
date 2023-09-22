@@ -8,14 +8,14 @@ name = "pybuilder-scm-ver-plugin"
 authors = [Author("Kyrylo Shpytsya", "kshpitsa@gmail.com")]
 license = "MIT"
 summary = "pybuilder plugin to set project from SCM"
-version = "0.2.1"
+version = "0.2.2"
 url = "https://github.com/kshpytsya/pybuilder-scm-ver-plugin"
 default_task = "publish"
 
 
 @init
 def set_properties(project):
-    project.depends_on("setuptools_scm")
+    project.depends_on("setuptools_scm<9.0")
     project.set_property("distutils_classifiers", [
         'Development Status :: 4 - Beta',
         'Programming Language :: Python',
